@@ -1,0 +1,9 @@
+apiVersion: kro.run/v1alpha1
+kind: MessageProcessor
+metadata:
+  name: orders
+spec:
+  name: orders
+  environment: test
+  replicas: 2
+  messageRetentionPeriod: "86400"

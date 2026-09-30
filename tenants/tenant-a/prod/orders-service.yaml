@@ -7,3 +7,4 @@ spec:
   environment: prod
   replicas: 5
   messageRetentionPeriod: "604800"
+  image: k3d-cloud-registry:5000/orders-processor:v1.0.0

@@ -8,4 +8,3 @@ Argo CD Application `<app>-<env>` in namespace `<app>-<env>`; a pull request her
 * `prod` must pin `valuesRevision` to a full 40-character commit SHA (promotion gate).
 * The `tenant-workloads` AppProject limits namespaces and resource kinds.
 
-The `<env>/orders-service.yaml` files next to `apps/` are legacy (pre-platform) examples and are not deployed.

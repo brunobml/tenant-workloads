@@ -1,0 +1,11 @@
+# Registers application "orders" (env prod) of tenant-a with the platform (Phase 4 C.2).
+# Read by the tenant-workloads ApplicationSet in gitops-control-plane. Tenant-owned data only:
+#   app            Application name prefix and namespace <app>-<env> (must match orders-*)
+#   env            dev | test | prod  (the platform maps it to the spoke and AWS account)
+#   port           host port of the spoke ingress, used for dashboard links
+#   valuesRevision orders-processor commit for deploy/values-<env>.yaml; prod needs a full SHA
+tenant: tenant-a
+app: orders
+env: prod
+port: "8082"
+valuesRevision: b9b00c8b1b46037e6bc0130f755678af2cbd1012

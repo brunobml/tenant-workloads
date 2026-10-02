@@ -1,0 +1,11 @@
+# Tenant registrations
+
+Each file in `tenants/<tenant>/apps/<app>-<env>.yaml` registers one application environment.
+The platform's `tenant-workloads` ApplicationSet (gitops-control-plane) turns every file into an
+Argo CD Application `<app>-<env>` in namespace `<app>-<env>`; a pull request here is all it takes.
+
+* `env` must be `dev`, `test` or `prod`; the platform picks the cluster and AWS account.
+* `prod` must pin `valuesRevision` to a full 40-character commit SHA (promotion gate).
+* The `tenant-workloads` AppProject limits namespaces and resource kinds.
+
+The `<env>/orders-service.yaml` files next to `apps/` are legacy (pre-platform) examples and are not deployed.

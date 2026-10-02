@@ -1,0 +1,6 @@
+tenant: tenant-a
+app: orders-demo
+env: dev
+port: "8081"
+valuesRevision: main
+valuesFile: deploy/values-orders-demo-dev.yaml

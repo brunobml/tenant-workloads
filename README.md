@@ -1,20 +1,21 @@
 # Tenant Workloads Repository
 
-**Owner**: Application Engineering / Tenant Teams (e.g., Tenant-A)  
+**Owner**: Application Engineering / Tenant Teams (e.g., Tenant-A)
 **Upstream GitHub Remote**: `https://github.com/brunobml/tenant-workloads.git`
 
-This repository contains declarative tenant application specifications consuming platform blueprints.
+Tenants **register** their application environments here. The platform's `tenant-workloads`
+ApplicationSet (gitops-control-plane, `applicationsets/tenant-workloads.yaml`) turns every
+registration file into an Argo CD Application. A pull request in this repository is all a tenant
+needs; the control-plane repository is not touched.
 
-## Multi-Tenant & Multi-Environment Directory Structure
 ```text
 tenants/
 └── tenant-a/
-    ├── dev/                # Deployed to spoke-nonprod (namespace: tenant-a-dev)
-    │   └── orders-service.yaml
-    ├── test/               # Deployed to spoke-nonprod (namespace: tenant-a-test)
-    │   └── orders-service.yaml
-    └── prod/               # Deployed to spoke-prod (namespace: tenant-a-prod)
-        └── orders-service.yaml
+    └── apps/
+        ├── orders-dev.yaml    # -> Application orders-dev  on spoke-nonprod (AWS account 111111111111)
+        ├── orders-test.yaml   # -> Application orders-test on spoke-nonprod (AWS account 111111111111)
+        └── orders-prod.yaml   # -> Application orders-prod on spoke-prod    (AWS account 222222222222)
 ```
 
-Argo CD's `ApplicationSet` in the Hub cluster automatically monitors this repository, discovers folders matching `tenants/*/*`, and routes them to the target spoke cluster and namespace.
+Registration format, rules and the prod promotion flow: [`tenants/README.md`](tenants/README.md)
+and [`developer-tutorial.md`](developer-tutorial.md).

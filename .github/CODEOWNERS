@@ -1,0 +1,8 @@
+# CODEOWNERS for tenant-workloads
+# Production workload registrations require platform owner review and approval
+
+# Global repository owner
+* @brunobml
+
+# Production application definitions (prod gate)
+/tenants/*/apps/*-prod.yaml @brunobml

@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/brunobml/tenant-workloads/schema/registration.schema.json",
+  "title": "Tenant app registration (tenants/<tenant>/apps/<app>-<env>.yaml)",
+  "description": "Contract of the tenant-workloads ApplicationSet in gitops-control-plane (2026-10-03 Track A.2). Mirrors its template guards, so a registration that passes here renders there.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["tenant", "app", "env", "port", "valuesRevision"],
+  "properties": {
+    "tenant": {"type": "string", "pattern": "^[a-z0-9]([a-z0-9-]*[a-z0-9])?$", "description": "must equal the tenants/<tenant>/ directory"},
+    "app": {
+      "type": "string",
+      "pattern": "^(orders|tenant)(-[a-z0-9]+)*$",
+      "maxLength": 50,
+      "description": "Application name prefix; the namespace is <app>-<env>, which the AppProject only allows as orders-* or tenant-*"
+    },
+    "env": {"enum": ["dev", "test", "prod"], "description": "dev/test -> spoke-nonprod (account 111111111111), prod -> spoke-prod (222222222222)"},
+    "port": {"type": "string", "pattern": "^[0-9]{4,5}$", "description": "host port of the spoke ingress, quoted"},
+    "valuesRevision": {"type": "string", "minLength": 1, "description": "orders-processor revision of the values file; prod needs a full commit SHA"},
+    "valuesFile": {"type": "string", "pattern": "^deploy/[A-Za-z0-9._-]+\\.ya?ml$", "description": "optional; default deploy/values-<env>.yaml"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"env": {"const": "prod"}}},
+      "then": {"properties": {"valuesRevision": {"pattern": "^[0-9a-f]{40}$"}, "port": {"const": "8082"}}},
+      "else": {"properties": {"port": {"const": "8081"}}}
+    }
+  ]
+}

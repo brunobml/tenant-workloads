@@ -1,0 +1,44 @@
+# 2026-10-03 Track A.2: registrations (JSON Schema, naming, uniqueness, values file at valuesRevision),
+# render of the tenant-workloads ApplicationSet with these registrations, kubeconform, secret scan.
+# O-1: REQUIRED status check (registration-checks) for pull requests to main.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  registration-checks:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          path: tenant-workloads
+      # The CI toolkit (ci/) and the ApplicationSets live in gitops-control-plane (main).
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: brunobml/gitops-control-plane
+          ref: main
+          path: gitops-control-plane
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: gitops-control-plane/ci/labci/go.mod
+          cache-dependency-path: gitops-control-plane/ci/labci/go.sum
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - run: pip install --require-hashes -r gitops-control-plane/ci/requirements.txt
+      - run: gitops-control-plane/ci/check-tenant-workloads.sh
+        env:
+          TENANT_WORKLOADS_DIR: tenant-workloads

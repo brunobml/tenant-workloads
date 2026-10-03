@@ -31,7 +31,7 @@ Delete its registration file (pull request). Argo CD removes the Application, th
 queues. The platform's `post-bootstrap` step cleans up the leftover credential and empty namespace.
 
 ## 4. See it running
-* Argo CD: http://localhost:8080 → **Log in via Keycloak** as `tenant-a-user` (sync dev/test; prod is read-only)
+* Argo CD: http://localhost → **Log in via Keycloak** as `tenant-a-user` (sync dev/test; prod is read-only)
 * Dashboards: `http://<app>-<env>.localhost:8081` (nonprod), `:8082` (prod)
 
 More detail: `gitops-control-plane/docs/developer-tutorial.md`.

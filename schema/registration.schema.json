@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/brunobml/tenant-workloads/schema/registration.schema.json",
   "title": "Tenant app registration (tenants/<tenant>/apps/<app>-<env>.yaml)",
-  "description": "Contract of the tenant-workloads ApplicationSet in gitops-control-plane (2026-10-03 Track A.2). Mirrors its template guards, so a registration that passes here renders there.",
+  "description": "Contract of the tenant-workloads-<tenant> ApplicationSets in gitops-control-plane (2026-10-03 Tracks A.2/B.2). Mirrors their template guards, so a registration that passes here renders there.",
   "type": "object",
   "additionalProperties": false,
   "required": ["tenant", "app", "env", "port", "valuesRevision"],

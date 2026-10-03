@@ -3,10 +3,13 @@
 **Owner**: Application Engineering / Tenant Teams (e.g., Tenant-A)
 **Upstream GitHub Remote**: `https://github.com/brunobml/tenant-workloads.git`
 
-Tenants **register** their application environments here. The platform's `tenant-workloads`
-ApplicationSet (gitops-control-plane, `applicationsets/tenant-workloads.yaml`) turns every
-registration file into an Argo CD Application. A pull request in this repository is all a tenant
-needs; the control-plane repository is not touched.
+Tenants **register** their application environments here. Each tenant has its own ApplicationSet
+in gitops-control-plane (`applicationsets/tenant-workloads-<tenant>.yaml`, 2026-10-03 Track B.2),
+which turns every registration file under `tenants/<tenant>/apps/` into an Argo CD Application.
+A malformed file therefore stops only its own tenant. Registering an app or environment is a pull
+request in this repository (the required check `registration-checks` must pass). Onboarding a new
+*tenant* is a platform change: the platform adds that tenant's ApplicationSet with
+`scripts/tenant-appset.sh <tenant>`; until then CI rejects a new `tenants/<tenant>/` directory.
 
 ```text
 tenants/

@@ -1,5 +1,5 @@
 # Registers application "orders" (env test) of tenant-a with the platform (Phase 4 C.2).
-# Read by the tenant-workloads ApplicationSet in gitops-control-plane. Tenant-owned data only:
+# Read by the tenant-workloads-tenant-a ApplicationSet in gitops-control-plane. Tenant-owned data only:
 #   app            Application name prefix and namespace <app>-<env> (must match orders-*)
 #   env            dev | test | prod  (the platform maps it to the spoke and AWS account)
 #   port           host port of the spoke ingress, used for dashboard links
